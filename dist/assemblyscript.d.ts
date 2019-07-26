@@ -2408,6 +2408,8 @@ declare module 'assemblyscript/src/types' {
 	export function typesToString(types: Type[]): string;
 	/** Represents a fully resolved function signature. */
 	export class Signature {
+	    /** The unique program id that represents this signature. */
+	    id: u32;
 	    /** Parameter types, if any, excluding `this`. */
 	    parameterTypes: Type[];
 	    /** Parameter names, if known, excluding `this`. */
@@ -2424,8 +2426,10 @@ declare module 'assemblyscript/src/types' {
 	    cachedFunctionTarget: FunctionTarget | null;
 	    /** Respective function type. */
 	    type: Type;
+	    /** The program that created this signature. */
+	    program: Program;
 	    /** Constructs a new signature. */
-	    constructor(parameterTypes?: Type[] | null, returnType?: Type | null, thisType?: Type | null);
+	    constructor(program: Program, parameterTypes?: Type[] | null, returnType?: Type | null, thisType?: Type | null);
 	    asFunctionTarget(program: Program): FunctionTarget;
 	    /** Gets the known or, alternatively, generic parameter name at the specified index. */
 	    getParameterName(index: i32): string;
@@ -2961,6 +2965,8 @@ declare module 'assemblyscript/src/program' {
 	    typeClasses: Map<TypeKind, Class>;
 	    /** Managed classes contained in the program, by id. */
 	    managedClasses: Map<i32, Class>;
+	    signatureTypes: Signature[];
+	    signatureID: i32;
 	    /** ArrayBufferView reference. */
 	    arrayBufferViewInstance: Class;
 	    /** ArrayBuffer instance reference. */
