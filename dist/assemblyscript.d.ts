@@ -4134,7 +4134,6 @@ declare module 'assemblyscript/src/builtins' {
 	    const isConstant = "~lib/builtins/isConstant";
 	    const isManaged = "~lib/builtins/isManaged";
 	    const isVoid = "~lib/builtins/isVoid";
-	    const ParameterCount = "~lib/builtins/ParameterCount";
 	    const clz = "~lib/builtins/clz";
 	    const ctz = "~lib/builtins/ctz";
 	    const popcnt = "~lib/builtins/popcnt";
@@ -4167,6 +4166,7 @@ declare module 'assemblyscript/src/builtins' {
 	    const alignof = "~lib/builtins/alignof";
 	    const offsetof = "~lib/builtins/offsetof";
 	    const nameof = "~lib/builtins/nameof";
+	    const lengthof = "~lib/builtins/lengthof";
 	    const select = "~lib/builtins/select";
 	    const unreachable = "~lib/builtins/unreachable";
 	    const changetype = "~lib/builtins/changetype";
