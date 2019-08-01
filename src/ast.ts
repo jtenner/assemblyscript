@@ -99,7 +99,8 @@ export enum NodeKind {
   DECORATOR,
   EXPORTMEMBER,
   SWITCHCASE,
-  COMMENT
+  COMMENT,
+  TYPEOFEXPRESSIONTYPE
 }
 
 /** Checks if a node represents a constant value. */
@@ -175,6 +176,13 @@ export abstract class Node {
     type.name = name;
     type.typeArguments = typeArguments;
     type.isNullable = isNullable;
+    return type;
+  }
+
+  static createTypeofExpressionType(expression: Expression, range: Range): TypeofExpressionTypeNode {
+    var type = new TypeofExpressionTypeNode();
+    type.range = range;
+    type.expression = expression;
     return type;
   }
 
@@ -1097,6 +1105,12 @@ export class TypeName extends Node {
   identifier: IdentifierExpression;
   /** Next part of the type name or `null` if this is the last part. */
   next: TypeName | null;
+}
+
+/** Represents a typeof expression. */
+export class TypeofExpressionTypeNode extends TypeNode {
+  kind = NodeKind.TYPEOFEXPRESSIONTYPE;
+  expression: Expression;
 }
 
 /** Represents a named type. */

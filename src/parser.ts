@@ -475,7 +475,14 @@ export class Parser extends DiagnosticEmitter {
         return null;
       }
 
-    // 'void'
+    } else if (token == Token.TYPEOF) {
+      tn.skip(Token.TYPEOF);
+      // typeof expression
+      let expression = this.parseExpression(tn);
+      assert(expression != null);
+      type = Node.createTypeofExpressionType(expression!, tn.range(startPos, tn.pos));
+
+      // 'void'
     } else if (token == Token.VOID) {
       type = Node.createNamedType(
         Node.createSimpleTypeName("void", tn.range()), [], false, tn.range(startPos, tn.pos)

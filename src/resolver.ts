@@ -57,7 +57,8 @@ import {
   BinaryExpression,
   ThisExpression,
   SuperExpression,
-  isTypeOmitted
+  isTypeOmitted,
+  TypeofExpressionTypeNode
 } from "./ast";
 
 import {
@@ -128,6 +129,14 @@ export class Resolver extends DiagnosticEmitter {
     reportMode: ReportMode = ReportMode.REPORT
   ): Type | null {
     switch (node.kind) {
+      case NodeKind.TYPEOFEXPRESSIONTYPE: {
+        return this.resolveTypeofExpressionTypeNode(
+          <TypeofExpressionTypeNode>node,
+          ctxElement,
+          ctxTypes,
+          reportMode
+        );
+      }
       case NodeKind.NAMEDTYPE: {
         return this.resolveNamedType(
           <NamedTypeNode>node,
@@ -147,6 +156,24 @@ export class Resolver extends DiagnosticEmitter {
       default: assert(false);
     }
     return null;
+  }
+
+  /** Resolves a {@link TypeofExpressionTypeNode} to a concrete {@link Type}. */
+  private resolveTypeofExpressionTypeNode(
+    /** The type to resolve. */
+    node: TypeofExpressionTypeNode,
+    /** Contextual element. */
+    ctxElement: Element,
+    /** Contextual types, i.e. `T`. */
+    ctxTypes: Map<string,Type> | null = null,
+    /** How to proceed with eventualy diagnostics. */
+    reportMode: ReportMode = ReportMode.REPORT
+  ): Type {
+    this.resolveExpression()
+    return Type.auto;
+    // let result = this.resolveExpression(node.expression, flow, ctxTypes, reportMode);
+    // assert(result != null);
+    // return result!.shadowType!.type;
   }
 
   /** Resolves a {@link NamedTypeNode} to a concrete {@link Type}. */
