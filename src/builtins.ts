@@ -658,7 +658,11 @@ export function compileCall(
     case BuiltinSymbols.isManaged: { // isManaged<T>() -> bool
       let type = evaluateConstantType(compiler, typeArguments, operands, reportNode);
       compiler.currentType = Type.bool;
-      if (!type) return module.unreachable();
+      if (!type) {
+        console.log("type not found");
+        return module.unreachable();
+      }
+      console.log(type.isManaged ? "managed" : "unmanaged");
       return module.i32(type.isManaged ? 1 : 0);
     }
     case BuiltinSymbols.isVoid: { // isVoid<T>() -> bool
